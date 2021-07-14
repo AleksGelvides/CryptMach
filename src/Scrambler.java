@@ -6,14 +6,8 @@ public class Scrambler {
     private static String encryptText;
     private static int[] key;
 
-    private static void encryptor() {
-        /*
-        Написать скрипт, который успешно сменит местоположение символов на отзеркаленный. Тогда всё будет работать
-        дописать шифровку даты. Но это мелочи. Самая сложная работа уже проделана.
-         */
-        String alphabetRu = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"; // 66
-        String alphabetEn = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; //52
-        String numbers = "1234567890";
+    private static void encryptor(String alphabetRu, String alphabetEn, String numbers) {
+
         Pattern pRu = Pattern.compile("[А-аЯ-я]");
         Pattern pEn = Pattern.compile("[A-aZ-z]");
         Pattern pNum = Pattern.compile("[1234567890]");
@@ -31,23 +25,17 @@ public class Scrambler {
             if(mSymbols.find())
                 continue;
             if (mRu.find()) {
-                int shift = alphabetRu.indexOf(encryptText.charAt(i)) + key[i];
-                if(shift < 0)
-                    shift = Math.abs(shift);
+                int shift = key[i] + alphabetRu.indexOf(encryptText.charAt(i));
                 if (shift >= alphabetRu.length())
                     shift = shift % alphabetRu.length();
                 encryptText = encryptText.replaceFirst(String.valueOf(encryptText.charAt(i)),String.valueOf(alphabetRu.charAt(shift)));
             } else if (mEn.find()) {
                 int shift = alphabetEn.indexOf(encryptText.charAt(i)) + key[i];
-                if(shift < 0)
-                    shift = Math.abs(shift);
                 if (shift >= alphabetEn.length())
                     shift = shift % alphabetEn.length();
-                encryptText = encryptText.replace(encryptText.charAt(i),alphabetEn.charAt(shift));
+                encryptText = encryptText.replaceFirst(String.valueOf(encryptText.charAt(i)),String.valueOf(alphabetEn.charAt(shift)));
             } else if (mNum.find()) {
                 int shift = numbers.indexOf(encryptText.charAt(i)) + key[i];
-                if (shift < 0)
-                    shift = Math.abs(shift);
                 if (shift >= numbers.length())
                     shift = shift % numbers.length();
                 encryptText = encryptText.replace(encryptText.charAt(i), numbers.charAt(shift));
@@ -63,9 +51,19 @@ public class Scrambler {
     }
 
     public void encryptText(String text) {
+        String ru = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"; // 66
+        String en = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; //52
+        String nums = "1234567890";
         keygen(text.length());
         encryptText = text;
-        encryptor();
+        encryptor(ru,en, nums);
+    }
+
+    public void desckryptText(String message){
+        String ru = "ЯЮЭЬЫЪЩШЧЦХФУТСРПОНМЛКЙИЗЖЁЕДГВБАяюэьыъщшчцхфутсрпонмлкйизжёедгвба";
+        String en = "ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba";
+        String nums = "0987654321";
+        encryptor(ru,en,nums);
     }
 
     public String getKey() {
