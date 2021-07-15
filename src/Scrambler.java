@@ -10,7 +10,7 @@ public class Scrambler {
 
         Pattern pRu = Pattern.compile("[А-аЯ-я]");
         Pattern pEn = Pattern.compile("[A-aZ-z]");
-        Pattern pNum = Pattern.compile("[1234567890]");
+        Pattern pNum = Pattern.compile("[1234567890 ]");
         Pattern pSymbols = Pattern.compile("[^А-аЯ-яA-aZ-z0-9]");
         Matcher mRu;
         Matcher mEn;
@@ -30,12 +30,12 @@ public class Scrambler {
                     shift = shift % alphabetRu.length();
                 encryptText = encryptText.replaceFirst(String.valueOf(encryptText.charAt(i)),String.valueOf(alphabetRu.charAt(shift)));
             } else if (mEn.find()) {
-                int shift = alphabetEn.indexOf(encryptText.charAt(i)) + key[i];
+                int shift = key[i] + alphabetEn.indexOf(encryptText.charAt(i));
                 if (shift >= alphabetEn.length())
                     shift = shift % alphabetEn.length();
                 encryptText = encryptText.replaceFirst(String.valueOf(encryptText.charAt(i)),String.valueOf(alphabetEn.charAt(shift)));
             } else if (mNum.find()) {
-                int shift = numbers.indexOf(encryptText.charAt(i)) + key[i];
+                int shift = key[i] + numbers.indexOf(encryptText.charAt(i));
                 if (shift >= numbers.length())
                     shift = shift % numbers.length();
                 encryptText = encryptText.replace(encryptText.charAt(i), numbers.charAt(shift));
@@ -52,8 +52,8 @@ public class Scrambler {
 
     public void encryptText(String text) {
         String ru = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"; // 66
-        String en = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; //52
-        String nums = "1234567890";
+        String en = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; //52
+        String nums = "1234567890 ";
         keygen(text.length());
         encryptText = text;
         encryptor(ru,en, nums);
@@ -62,7 +62,7 @@ public class Scrambler {
     public void desckryptText(String message){
         String ru = "ЯЮЭЬЫЪЩШЧЦХФУТСРПОНМЛКЙИЗЖЁЕДГВБАяюэьыъщшчцхфутсрпонмлкйизжёедгвба";
         String en = "ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba";
-        String nums = "0987654321";
+        String nums = " 0987654321";
         encryptor(ru,en,nums);
     }
 
