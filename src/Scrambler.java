@@ -46,7 +46,7 @@ public class Scrambler {
     private void keygen(int keyLenght) {
         key = new int[keyLenght];
         for (int i = 0; i < keyLenght; i++) {
-            key[i] = (int) (0 + Math.random() * 100);
+            key[i] = (int) (1 + Math.random() * 10);
         }
     }
 
