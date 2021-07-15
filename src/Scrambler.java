@@ -11,7 +11,7 @@ public class Scrambler {
         Pattern pRu = Pattern.compile("[А-аЯ-я]");
         Pattern pEn = Pattern.compile("[A-aZ-z]");
         Pattern pNum = Pattern.compile("[1234567890 ]");
-        Pattern pSymbols = Pattern.compile("[^А-аЯ-яA-aZ-z0-9]");
+        Pattern pSymbols = Pattern.compile("[^А-аЯ-яA-aZ-z0-9 ]");
         Matcher mRu;
         Matcher mEn;
         Matcher mNum;
