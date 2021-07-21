@@ -13,7 +13,8 @@ public class Main {
             System.out.println("Ваш ключ дешифровки: " + s.getKey());
             System.out.println("Введите любой символ для дешифровки");
             String menu = scanner.nextLine();
-            s.desckryptText(s.getCipherText());
+            String key = s.getKey();
+            s.desckryptText(s.getCipherText(), key);
             System.out.println("Расшифровка: " + s.getCipherText());
         }
     }
